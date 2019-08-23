@@ -51,7 +51,7 @@
     border: none;
     outline: none;
     color: rgb(54, 54, 54);
-    width: 30%;
+    width: 40%;
     border: 1px solid rgb(54, 54, 54);
     transition: all 250ms ease;
 }
@@ -71,7 +71,7 @@ input.Input:focus {
     border-radius: 0 25px 25px 0;
     position: absolute;
     top: 0;
-    right: 34%;
+    right: 28%;
     cursor: pointer;
     transition: all 250ms ease;
 }
@@ -84,14 +84,45 @@ input.Input:focus {
     padding: 0 .4rem;
 }
 
-@media only screen and (max-width: 730px) {
-    .Title {
-        font-size: 4rem;
+@media only screen and (max-width: 1200px) {
+    .Input {
+        width: 50%;
+    }
+    .Button {
+        right: 23%;
     }
 }
 
-@media only screen and (max-width: 370px) {
+@media only screen and (max-width: 825px) {
+    .Title {
+        font-size: 4rem;
+    }
+    .Subline {
+        font-size: 1.3rem;
+        letter-spacing: .2rem;
+    }
+    .Input {
+        width: 70%;
+    }
+    .Button {
+        right: 11%;
+    }
+}
+
+@media only screen and (max-width: 420px) {
     .Title {
         font-size: 2rem;
+    }
+    .Subline {
+        font-size: 1rem;
+    }
+    .Info {
+        font-size: .85rem;
+    }
+    .Input {
+        width: 90%;
+    }
+    .Button {
+        right: 2%;
     }
 }
