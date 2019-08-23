@@ -1,0 +1,39 @@
+.Home {
+    height: 100vh;
+    background-color: grey;
+}
+
+.Headline {
+    text-align: center;
+    background-color: dodgerblue;
+    padding: 3rem 0;
+}
+
+.Title {
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 8rem;
+    color: white;
+    text-transform: uppercase;
+}
+
+.Subline {
+    font-size: 1.6rem;
+    color: rgb(54, 54, 54);
+    font-weight: 100;
+}
+
+.Icon {
+    margin-left: 1rem;
+}
+
+@media only screen and (max-width: 730px) {
+    .Title {
+        font-size: 4rem;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .Title {
+        font-size: 2rem;
+    }
+}
