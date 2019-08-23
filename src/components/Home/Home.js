@@ -34,10 +34,11 @@ class Home extends Component {
           <p className={styles.Subline}>Where we go to look Wordz-Up</p>
         </div>
         <div className={styles.Search}>
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" />
-            <button type="submit">
-              <FontAwesomeIcon icon={faSearch} />
+          <p className={styles.Info}>Search a word to find the definition</p>
+          <form className={styles.Form} onSubmit={this.handleSubmit}>
+            <input className={styles.Input} type="text" />
+            <button className={styles.Button} type="submit">
+              <FontAwesomeIcon className={styles.FormIcon} icon={faSearch} />
             </button>
           </form>
         </div>

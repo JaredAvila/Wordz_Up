@@ -1,6 +1,7 @@
 .Home {
     height: 100vh;
     background-color: grey;
+    cursor: default;
 }
 
 .Headline {
@@ -16,14 +17,71 @@
     text-transform: uppercase;
 }
 
+.Icon {
+    margin-left: 1rem;
+}
+
 .Subline {
     font-size: 1.6rem;
     color: rgb(54, 54, 54);
     font-weight: 100;
+    letter-spacing: .3rem;
 }
 
-.Icon {
-    margin-left: 1rem;
+.Search {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.Info {
+    color: rgb(54, 54, 54);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: .1rem;
+}
+
+.Form {
+    position: relative;
+}
+
+.Input {
+    padding: .4rem;
+    font-size: 1.6rem;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    color: rgb(54, 54, 54);
+    width: 30%;
+    border: 1px solid rgb(54, 54, 54);
+    transition: all 250ms ease;
+}
+
+input.Input:focus {
+    background-color: rgb(215, 235, 255);
+}
+
+.Button {
+    outline: none;
+    background-color: dodgerblue;
+    color: white;
+    border: 1px solid rgb(54, 54, 54);
+    border-left: none;
+    font-size: 1.6rem;
+    padding: .4rem;
+    border-radius: 0 25px 25px 0;
+    position: absolute;
+    top: 0;
+    right: 34%;
+    cursor: pointer;
+    transition: all 250ms ease;
+}
+
+.Button:hover {
+    background-color: rgb(27, 110, 192);
+}
+
+.FormIcon {
+    padding: 0 .4rem;
 }
 
 @media only screen and (max-width: 730px) {
