@@ -10,10 +10,19 @@ const THESAURUS_KEY = process.env.REACT_APP_THESAURUS_API_KEY;
 // https://www.dictionaryapi.com/api/v3/references/thesaurus/json/umpire?key=your-api-key  THESAURUS EX
 
 class Word extends Component {
+  state = {
+    word: null
+  };
+
+  componentDidMount() {
+    const { word } = this.props.match.params;
+    this.setState({ word: word });
+  }
+
   render() {
     return (
       <div>
-        <h1>Word Component</h1>
+        <h1>{this.state.word} Component</h1>
         <Link to="/">Back</Link>
       </div>
     );
