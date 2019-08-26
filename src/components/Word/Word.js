@@ -13,9 +13,8 @@ class Word extends Component {
       spelling: null,
       type: null,
       pronounce: null,
-      sound: null,
       definition: [],
-      soundCat: null
+      soundURL: null
     },
     suggestions: [],
     notFound: false
@@ -24,6 +23,7 @@ class Word extends Component {
   componentDidMount() {
     const DICTIONARY_KEY = process.env.REACT_APP_DICTIONARY_API_KEY;
     const THESAURUS_KEY = process.env.REACT_APP_THESAURUS_API_KEY;
+    // get info from API
     axios
       .get(
         `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${
@@ -31,7 +31,10 @@ class Word extends Component {
         }?key=${DICTIONARY_KEY}`
       )
       .then(data => {
+        // check for validity of returned data
+        // if it is an array and not an object then the word was not found
         if (typeof data.data[0] !== "object") {
+          // if the array is empty no suggestions were found
           if (data.data.length < 1) {
             this.setState({
               suggestions: ["No suggestions. Please try again"],
@@ -45,28 +48,34 @@ class Word extends Component {
           }
         } else {
           let soundCategory = data.data[0].meta.id[0];
-          let soundName = data.data[0].hwi.prs[0].sound.audio;
-          let patt = /^[A-Za-z]+$/;
+          const soundName = data.data[0].hwi.prs[0].sound.audio;
+          // If first char in word is not a letter set result to false.
+          const patt = /^[A-Za-z]+$/;
           let result = patt.test(data.data[0].hwi.hw[0]);
+          // Checks for 'gg' at the beginning of sound file
           if (soundName[0] === "g" && soundName[1] === "g") {
             soundCategory = "gg";
+            // Checks for "bix" at the beginning of sound file
           } else if (
             soundName[0] === "b" &&
             soundName[1] === "i" &&
             soundName[2] === "x"
           ) {
             soundCategory = "bix";
+            // Checks to see if the first char is not a letter
           } else if (!result) {
             soundCategory = "number";
             result = true;
           }
+          // set all the word data in state
           const newWord = {
-            spelling: data.data[0].hwi.hw,
+            spelling: this.props.match.params.word,
             type: data.data[0].fl,
             pronounce: data.data[0].hwi.prs[0].mw,
-            sound: data.data[0].hwi.prs[0].sound.audio,
             definition: data.data[0].shortdef,
-            soundCat: soundCategory
+            soundURL: `https://media.merriam-webster.com/soundc11/${soundCategory}/${
+              data.data[0].hwi.prs[0].sound.audio
+            }.wav`
           };
           this.setState({
             word: newWord
@@ -78,16 +87,29 @@ class Word extends Component {
       .catch(err => console.log(err));
   }
 
+  componentDidUpdate() {}
+
   render() {
+    let audio = "";
+    // Waits for audioURL in state before rendering element
+    if (this.state.word.soundURL) {
+      audio = (
+        <audio controls>
+          <source src={this.state.word.soundURL} type="audio/wav" />
+          your browser doesn't support this audio type
+        </audio>
+      );
+    }
     let markUp = (
       <Fragment>
         <h1>
           {this.state.word.spelling} Component ({this.state.word.type})
         </h1>
+        {audio}
         <Link to="/">Back</Link>
       </Fragment>
     );
-
+    // if the word was not found, use this markup isntead
     if (this.state.notFound) {
       markUp = (
         <Fragment>
