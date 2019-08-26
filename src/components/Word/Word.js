@@ -13,7 +13,9 @@ class Word extends Component {
       spelling: null,
       type: null,
       pronounce: null,
-      sound: null
+      sound: null,
+      definition: [],
+      soundCat: null
     },
     suggestions: [],
     notFound: false
@@ -30,24 +32,48 @@ class Word extends Component {
       )
       .then(data => {
         if (typeof data.data[0] !== "object") {
-          console.log("not a word");
-          this.setState({
-            suggestions: data.data,
-            notFound: true
-          });
+          if (data.data.length < 1) {
+            this.setState({
+              suggestions: ["No suggestions. Please try again"],
+              notFound: true
+            });
+          } else {
+            this.setState({
+              suggestions: data.data,
+              notFound: true
+            });
+          }
         } else {
+          let soundCategory = data.data[0].meta.id[0];
+          let soundName = data.data[0].hwi.prs[0].sound.audio;
+          let patt = /^[A-Za-z]+$/;
+          let result = patt.test(data.data[0].hwi.hw[0]);
+          if (soundName[0] === "g" && soundName[1] === "g") {
+            soundCategory = "gg";
+          } else if (
+            soundName[0] === "b" &&
+            soundName[1] === "i" &&
+            soundName[2] === "x"
+          ) {
+            soundCategory = "bix";
+          } else if (!result) {
+            soundCategory = "number";
+            result = true;
+          }
           const newWord = {
-            spelling: this.props.match.params.word,
+            spelling: data.data[0].hwi.hw,
             type: data.data[0].fl,
             pronounce: data.data[0].hwi.prs[0].mw,
-            sound: data.data[0].hwi.prs[0].sound.audio
+            sound: data.data[0].hwi.prs[0].sound.audio,
+            definition: data.data[0].shortdef,
+            soundCat: soundCategory
           };
           this.setState({
             word: newWord
           });
         }
-        console.log("What I want ", data.data);
-        console.log(data.data[0]);
+        console.log("What I want ", data.data[0].hwi.hw);
+        console.log(this.state.word);
       })
       .catch(err => console.log(err));
   }
@@ -69,9 +95,10 @@ class Word extends Component {
           <p>Did you mean...</p>
           <ul>
             {this.state.suggestions.map(el => {
-              return <li>{el}</li>;
+              return <li key={el}>{el}</li>;
             })}
           </ul>
+          <Link to="/">Back</Link>
         </Fragment>
       );
     }
