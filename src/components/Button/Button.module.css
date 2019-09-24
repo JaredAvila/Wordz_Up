@@ -1,0 +1,17 @@
+.Button {
+    padding: 1rem 2rem;
+    background-color: rgb(94, 94, 94);
+    color: white;
+    width: fit-content;
+    text-decoration: none;
+    margin: .5rem 0;
+    border-radius: .2rem;
+}
+
+.Button:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+.Button:active {
+    background-color: rgb(82, 82, 82);
+}

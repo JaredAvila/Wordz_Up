@@ -1,13 +1,13 @@
 import React from "react";
 import Home from "./containers/Home/Home";
-import Word from "./components/Word/Word";
+import WordContainer from "./containers/WordContainer/WordContainer";
 import { Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <Route path="/" exact component={Home} />
-      <Route path="/:word" component={Word} />
+      <Route path="/:word" component={WordContainer} />
     </div>
   );
 }

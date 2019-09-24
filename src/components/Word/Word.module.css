@@ -1,7 +1,6 @@
 .Word {
-    display: flex;
-    justify-content: center;
-    padding: 1.8rem;
-    background-color: lightgrey;
-    height: 100vh;
+    padding: 2rem;
+    background-color: #a0d1ff;
+    width: 80%;
+    border-radius: .2rem;
 }
