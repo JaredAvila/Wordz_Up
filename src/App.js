@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./components/Home/Home";
+import Home from "./containers/Home/Home";
 import Word from "./components/Word/Word";
 import { Route } from "react-router-dom";
 

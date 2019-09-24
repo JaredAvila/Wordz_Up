@@ -1,0 +1,42 @@
+.Header {
+    text-align: center;
+    background-color: dodgerblue;
+    padding: 3rem 0;
+}
+
+.Title {
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 8rem;
+    color: white;
+    text-transform: uppercase;
+}
+
+.Icon {
+    margin-left: 1rem;
+}
+
+.Subline {
+    font-size: 1.6rem;
+    color: rgb(54, 54, 54);
+    font-weight: 100;
+    letter-spacing: .3rem;
+}
+
+@media only screen and (max-width: 825px) {
+    .Title {
+        font-size: 4rem;
+    }
+    .Subline {
+        font-size: 1.3rem;
+        letter-spacing: .2rem;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .Title {
+        font-size: 2rem;
+    }
+    .Subline {
+        font-size: 1rem;
+    }
+}
