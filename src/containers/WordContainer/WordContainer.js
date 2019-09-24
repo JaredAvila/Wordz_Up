@@ -4,7 +4,7 @@ import axios from "axios";
 import * as styles from "./WordContainer.module.css";
 
 import Word from "../../components/Word/Word";
-import NotFound from "../../components/NotFound/NotFound"
+import NotFound from "../../components/NotFound/NotFound";
 import Button from "../../components/Button/Button";
 
 // https://www.dictionaryapi.com/api/v3/references/collegiate/json/cheese?key=your-api-key  DICTIONARY EX
@@ -25,12 +25,16 @@ class WordContainer extends Component {
   };
 
   componentDidMount() {
+    this.getWordData(this.props.match.params.word);
+  }
+
+  getWordData = word => {
     const DICTIONARY_KEY = process.env.REACT_APP_DICTIONARY_API_KEY;
     // const THESAURUS_KEY = process.env.REACT_APP_THESAURUS_API_KEY;
     // get info from API
     axios
       .get(
-        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${this.props.match.params.word}?key=${DICTIONARY_KEY}`
+        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${DICTIONARY_KEY}`
       )
       .then(data => {
         // check for validity of returned data
@@ -76,21 +80,25 @@ class WordContainer extends Component {
           }
           // set all the word data in state
           const newWord = {
-            spelling: this.props.match.params.word,
+            spelling: word,
             type: data.data[0].fl,
             pronounce: data.data[0].hwi.prs[0].mw,
             definition: data.data[0].shortdef,
             soundURL: `https://media.merriam-webster.com/soundc11/${soundCategory}/${data.data[0].hwi.prs[0].sound.audio}.wav`
           };
           this.setState({
-            word: newWord
+            word: newWord,
+            notFound: false
           });
         }
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  componentDidUpdate() {}
+  handleUpdate = newWord => {
+    console.log(this.props.match.params.word, newWord);
+    this.getWordData(newWord);
+  };
 
   render() {
     let markUp;
@@ -98,7 +106,11 @@ class WordContainer extends Component {
       // if the word was not found, use this markup isntead
       if (this.state.notFound) {
         markUp = (
-          <NotFound suggestions={this.state.suggestions} word={this.state.word} />
+          <NotFound
+            suggestions={this.state.suggestions}
+            word={this.state.word}
+            updateWord={this.handleUpdate}
+          />
         );
       } else {
         markUp = <Word word={this.state.word}></Word>;

@@ -13,7 +13,9 @@ const NotFound = props => {
         {props.suggestions.map(el => {
           return (
             <li className={styles.Item} key={el}>
-              <URLLink url={`/${el}`}>{el}</URLLink>
+              <URLLink url={el} action={props.updateWord}>
+                {el}
+              </URLLink>
             </li>
           );
         })}

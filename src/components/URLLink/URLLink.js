@@ -8,24 +8,20 @@ class URLLink extends Component {
     redirect: false
   };
 
-  componentDidUpdate() {
-    console.log("update");
-  }
-
   handleClick = () => {
+    this.props.action(this.props.url);
     this.setState({ redirect: true });
-    console.log("clicked ", this.state);
   };
   render() {
-    let markUp = (
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={this.props.url} />;
+    }
+    return (
       <p className={styles.URLLink} onClick={this.handleClick}>
         {this.props.children}
       </p>
     );
-    if (this.state.redirect) {
-      return <Redirect to={this.props.url} />;
-    }
-    return markUp;
   }
 }
 
