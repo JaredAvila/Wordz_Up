@@ -3,6 +3,8 @@ import axios from "axios";
 
 import { Link } from "react-router-dom";
 
+import * as styles from "./Word.module.css";
+
 // https://www.dictionaryapi.com/api/v3/references/collegiate/json/cheese?key=your-api-key  DICTIONARY EX
 // https://media.merriam-webster.com/soundc11/[subdirectory]/[base filename].wav  PRONOUNCIATION EX
 // https://www.dictionaryapi.com/api/v3/references/thesaurus/json/umpire?key=your-api-key  THESAURUS EX
@@ -26,22 +28,25 @@ class Word extends Component {
     // get info from API
     axios
       .get(
-        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${
-          this.props.match.params.word
-        }?key=${DICTIONARY_KEY}`
+        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${this.props.match.params.word}?key=${DICTIONARY_KEY}`
       )
       .then(data => {
         // check for validity of returned data
         // if it is an array and not an object then the word was not found
         if (typeof data.data[0] !== "object") {
           // if the array is empty no suggestions were found
+          const unfoundWord = {
+            spelling: this.props.match.params.word
+          };
           if (data.data.length < 1) {
             this.setState({
               suggestions: ["No suggestions. Please try again"],
+              word: unfoundWord,
               notFound: true
             });
           } else {
             this.setState({
+              word: unfoundWord,
               suggestions: data.data,
               notFound: true
             });
@@ -73,15 +78,13 @@ class Word extends Component {
             type: data.data[0].fl,
             pronounce: data.data[0].hwi.prs[0].mw,
             definition: data.data[0].shortdef,
-            soundURL: `https://media.merriam-webster.com/soundc11/${soundCategory}/${
-              data.data[0].hwi.prs[0].sound.audio
-            }.wav`
+            soundURL: `https://media.merriam-webster.com/soundc11/${soundCategory}/${data.data[0].hwi.prs[0].sound.audio}.wav`
           };
           this.setState({
             word: newWord
           });
         }
-        console.log("What I want ", data.data[0].hwi.hw);
+        // console.log("What I want ", data.data[0].hwi.hw);
         console.log(this.state.word);
       })
       .catch(err => console.log(err));
@@ -100,30 +103,40 @@ class Word extends Component {
         </audio>
       );
     }
-    let markUp = (
-      <Fragment>
-        <h1>
-          {this.state.word.spelling} Component ({this.state.word.type})
-        </h1>
-        {audio}
-        <Link to="/">Back</Link>
-      </Fragment>
-    );
-    // if the word was not found, use this markup isntead
-    if (this.state.notFound) {
+    let markUp;
+    if (this.state.word.spelling) {
+      let definitions = "";
+      this.state.word.definition.forEach(def => {
+        return (definitions += `<li>${def}</li>`);
+      });
+      console.log(definitions);
       markUp = (
-        <Fragment>
-          <h1>Word Not Found.</h1>
-          <p>Did you mean...</p>
-          <ul>
-            {this.state.suggestions.map(el => {
-              return <li key={el}>{el}</li>;
-            })}
-          </ul>
+        <div className={styles.Word}>
+          <h1>
+            {this.state.word.spelling}: ({this.state.word.type})
+          </h1>
+          <ul>{definitions}</ul>
+          {audio}
           <Link to="/">Back</Link>
-        </Fragment>
+        </div>
       );
+      // if the word was not found, use this markup isntead
+      if (this.state.notFound) {
+        markUp = (
+          <div>
+            <h1>Unable to find "{this.state.word["spelling"]}".</h1>
+            <p>Did you mean...</p>
+            <ul>
+              {this.state.suggestions.map(el => {
+                return <li key={el}>{el}</li>;
+              })}
+            </ul>
+            <Link to="/">Back</Link>
+          </div>
+        );
+      }
     }
+
     return <div>{markUp}</div>;
   }
 }
