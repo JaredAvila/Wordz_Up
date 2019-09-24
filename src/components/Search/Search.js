@@ -9,16 +9,24 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 export default class Search extends Component {
   state = {
     redirect: false,
-    word: ""
+    word: "",
+    error: ""
   };
 
   handleSubmit = e => {
     e.preventDefault();
     const el = document.getElementById("Input");
-    this.setState({ redirect: true, word: `/${el.value}` });
+    if (!el.value.length) {
+      this.setState({ error: "Must enter a word" });
+      setTimeout(() => {
+        this.setState({ error: "" });
+      }, 1500);
+    } else {
+      this.setState({ redirect: true, word: `/${el.value}` });
+    }
   };
   render() {
-    const { redirect } = this.state;
+    const { redirect, error } = this.state;
     if (redirect) {
       return <Redirect to={this.state.word} />;
     }
@@ -31,6 +39,7 @@ export default class Search extends Component {
             <FontAwesomeIcon className={styles.FormIcon} icon={faSearch} />
           </button>
         </form>
+        <p className={styles.Error}>{error}</p>
       </div>
     );
   }

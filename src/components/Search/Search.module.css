@@ -54,6 +54,12 @@ input.Input:focus {
     padding: 0 .4rem;
 }
 
+.Error {
+    color: rgb(202, 15, 15);
+    padding: 1rem 0;
+    font-size: 1.4rem;
+}
+
 @media only screen and (max-width: 1200px) {
     .Input {
         width: 50%;
