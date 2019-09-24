@@ -38,6 +38,7 @@
 
 .Sound {
     display: flex;
+    flex-wrap: wrap;
 }
 
 audio {
@@ -46,4 +47,18 @@ audio {
 
 audio::-webkit-media-controls-panel {
     background: linear-gradient(90deg, rgb(52, 154, 255), transparent 90%);
+}
+
+@media only screen and (max-width: 500px) {
+    .Word {
+        padding: 1rem;
+        width: 100%;
+    }
+    .Title {
+        font-size: 1.8rem;
+    }
+    .Pronounce {
+        padding: .5rem .7rem;
+        font-size: 1.2rem;
+    }
 }

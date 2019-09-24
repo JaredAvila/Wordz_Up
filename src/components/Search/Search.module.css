@@ -73,6 +73,9 @@ input.Input:focus {
 }
 
 @media only screen and (max-width: 420px) {
+    .Search {
+        padding: 4rem 1rem;
+    }
     .Info {
         font-size: .85rem;
     }
@@ -80,6 +83,6 @@ input.Input:focus {
         width: 90%;
     }
     .Button {
-        right: 2%;
+        right: -2%;
     }
 }
