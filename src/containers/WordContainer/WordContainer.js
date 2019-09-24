@@ -92,11 +92,19 @@ class WordContainer extends Component {
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        const unfoundWord = {
+          spelling: this.props.match.params.word
+        };
+        this.setState({
+          suggestions: ["No suggestions. Please try again"],
+          word: unfoundWord,
+          notFound: true
+        });
+      });
   };
 
   handleUpdate = newWord => {
-    console.log(this.props.match.params.word, newWord);
     this.getWordData(newWord);
   };
 

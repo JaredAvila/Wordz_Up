@@ -1,3 +1,10 @@
 .URLLink {
-    color: blue;
+    color: dodgerblue;
+    cursor: pointer;
+    font-weight: 300;
+    width: fit-content;
+}
+
+.URLLink:hover {
+    font-weight: 400;
 }
