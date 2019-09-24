@@ -1,6 +1,49 @@
 .Word {
     padding: 2rem;
-    background-color: #a0d1ff;
+    background-color: #f1f1f1;
     width: 80%;
     border-radius: .2rem;
+}
+
+.Title {
+    margin: .5rem 0;
+    color: rgb(26, 131, 236);
+}
+
+.Title span {
+    text-decoration: underline;
+    text-transform: capitalize;
+}
+
+.Pronounce {
+    padding: 0 .7rem;
+    align-self: center;
+    font-size: 1.4rem;
+}
+
+.Pronounce em {
+    color: rgb(10, 123, 236);
+    padding: 0 .2rem;
+}
+
+.List {
+    list-style-type: none;
+    margin: 0 0 1rem 1.5rem;
+}
+
+.Item {
+    margin-bottom: .5rem;
+    font-size: 1.2rem;
+}
+
+.Sound {
+    display: flex;
+}
+
+audio {
+    outline: none;
+}
+
+audio::-webkit-media-controls-panel {
+    background: linear-gradient(90deg, rgb(52, 154, 255), transparent 90%);
 }

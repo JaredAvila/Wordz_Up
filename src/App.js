@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Route path="/" exact component={Home} />
       <Route path="/:word" component={WordContainer} />
     </div>

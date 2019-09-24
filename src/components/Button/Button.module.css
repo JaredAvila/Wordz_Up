@@ -6,6 +6,7 @@
     text-decoration: none;
     margin: .5rem 0;
     border-radius: .2rem;
+    transition: all 250ms ease;
 }
 
 .Button:hover {

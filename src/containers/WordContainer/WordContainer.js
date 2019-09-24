@@ -4,6 +4,7 @@ import axios from "axios";
 import * as styles from "./WordContainer.module.css";
 
 import Word from "../../components/Word/Word";
+import NotFound from "../../components/NotFound/NotFound"
 import Button from "../../components/Button/Button";
 
 // https://www.dictionaryapi.com/api/v3/references/collegiate/json/cheese?key=your-api-key  DICTIONARY EX
@@ -85,8 +86,6 @@ class WordContainer extends Component {
             word: newWord
           });
         }
-        // console.log("What I want ", data.data[0].hwi.hw);
-        console.log(this.state.word);
       })
       .catch(err => console.log(err));
   }
@@ -99,15 +98,7 @@ class WordContainer extends Component {
       // if the word was not found, use this markup isntead
       if (this.state.notFound) {
         markUp = (
-          <div>
-            <h1>Unable to find "{this.state.word["spelling"]}".</h1>
-            <p>Did you mean...</p>
-            <ul>
-              {this.state.suggestions.map(el => {
-                return <li key={el}>{el}</li>;
-              })}
-            </ul>
-          </div>
+          <NotFound suggestions={this.state.suggestions} word={this.state.word} />
         );
       } else {
         markUp = <Word word={this.state.word}></Word>;
